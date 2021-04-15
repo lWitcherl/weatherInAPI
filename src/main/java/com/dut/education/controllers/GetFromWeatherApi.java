@@ -3,7 +3,6 @@ package com.dut.education.controllers;
 import com.dut.education.communications.WeatherCommunicator;
 import com.dut.education.entitys.CityWeather;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,7 @@ public class GetFromWeatherApi {
     }
 
     @GetMapping("/cityweather/{var}")
-    public CityWeather getCityWeather(@PathVariable String var){
+    public CityWeather getCityWeather(@PathVariable String var)throws Throwable{
         CityWeather cityWeather ;
         try {
             int id = Integer.valueOf(var);
@@ -34,7 +33,7 @@ public class GetFromWeatherApi {
     }
 
     @GetMapping("/cityweather/{lon}/{lat}")
-    public CityWeather getCityWeather(@PathVariable("lon") int lon,@PathVariable("lat") int lat){
+    public CityWeather getCityWeather(@PathVariable("lon") int lon,@PathVariable("lat") int lat) throws Throwable {
         CityWeather cityWeather = communicator.getCityWeather(lon,lat);
         return cityWeather;
     }

@@ -10,8 +10,8 @@ public class WeatherFromApi {
     private Main main;
     private Wind wind;
     private Clouds clouds;
-    private String rain;
-    private String snow;
+    private Rain rain;
+    private Snow snow;
     private int dt;
     private Sys sys;
     private int timezone;
@@ -70,19 +70,19 @@ public class WeatherFromApi {
         this.clouds = clouds;
     }
 
-    public String getRain() {
+    public Rain getRain() {
         return rain;
     }
 
-    public void setRain(String rain) {
+    public void setRain(Rain rain) {
         this.rain = rain;
     }
 
-    public String getSnow() {
+    public Snow getSnow() {
         return snow;
     }
 
-    public void setSnow(String snow) {
+    public void setSnow(Snow snow) {
         this.snow = snow;
     }
 
@@ -365,6 +365,47 @@ class Clouds{
     }
 }
 
+class Rain{
+    private double oneH;
+    private double threeH;
+
+    public double get1h() {
+        return oneH;
+    }
+
+    public void set1h(double oneH) {
+        this.oneH = oneH;
+    }
+
+    public double get3h() {
+        return threeH;
+    }
+
+    public void set3h(double threeH) {
+        this.threeH = threeH;
+    }
+}
+class Snow{
+    private double oneH;
+    private double threeH;
+
+    public double get1h() {
+        return oneH;
+    }
+
+    public void set1h(double oneH) {
+        this.oneH = oneH;
+    }
+
+    public double get3h() {
+        return threeH;
+    }
+
+    public void set3h(double threeH) {
+        this.threeH = threeH;
+    }
+}
+
 class Sys{
     private int type;
     private int id;
@@ -372,4 +413,52 @@ class Sys{
     private String country;
     private int sunrise;
     private int sunset;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getMessage() {
+        return message;
+    }
+
+    public void setMessage(int message) {
+        this.message = message;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public int getSunrise() {
+        return sunrise;
+    }
+
+    public void setSunrise(int sunrise) {
+        this.sunrise = sunrise;
+    }
+
+    public int getSunset() {
+        return sunset;
+    }
+
+    public void setSunset(int sunset) {
+        this.sunset = sunset;
+    }
 }
