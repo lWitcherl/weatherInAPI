@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping("/api")
 public class GetFromWeatherApi {
@@ -20,20 +21,20 @@ public class GetFromWeatherApi {
         this.communicator = communicator;
     }
 
-    @GetMapping("/cityweather/{var}")
+    @GetMapping(value = "/cityweather/{var}")
     public CityWeather getCityWeather(@PathVariable String var)throws Throwable{
         CityWeather cityWeather ;
         try {
-            int id = Integer.valueOf(var);
+            int id = Integer.parseInt(var);
             cityWeather = communicator.getCityWeather(id);
-        }catch (Exception e){
+        }catch (NumberFormatException e){
             cityWeather = communicator.getCityWeather(var);
         }
         return cityWeather;
     }
 
     @GetMapping("/cityweather/{lon}/{lat}")
-    public CityWeather getCityWeather(@PathVariable("lon") int lon,@PathVariable("lat") int lat) throws Throwable {
+    public CityWeather getCityWeather(@PathVariable("lon") double lon,@PathVariable("lat") double lat) throws Throwable {
         CityWeather cityWeather = communicator.getCityWeather(lon,lat);
         return cityWeather;
     }
