@@ -3,29 +3,27 @@ package com.dut.education.communications;
 import com.dut.education.entitys.CityWeather;
 import com.dut.education.entitys.WeatherFromApi;
 import com.dut.education.entitys.exception.NoSuchCityException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 @Component
 public class WeatherCommunicatorImp implements WeatherCommunicator{
 
     private RestTemplate restTemplate;
-    private Properties p = new Properties();
+    private Properties properties ;
     private final String URL ;
 
-    WeatherCommunicatorImp(RestTemplate restTemplate) throws IOException {
-        this.restTemplate = restTemplate;
-        String part = WeatherCommunicatorImp.class.getClassLoader().getResource("setting.properties").getPath();
-        p.load(new FileInputStream(part));
-        URL = p.getProperty("URL");
-    }
 
+    public WeatherCommunicatorImp(RestTemplate restTemplate,@Qualifier("setting") Properties properties) {
+        this.restTemplate = restTemplate;
+        this.properties = properties;
+        URL = properties.getProperty("URL");
+    }
 
     public CityWeather getCityWeather(String cityName) throws Throwable{
         WeatherFromApi weatherFromApi;
@@ -35,8 +33,7 @@ public class WeatherCommunicatorImp implements WeatherCommunicator{
             if(e.getStatusCode()== HttpStatus.NOT_FOUND) throw new NoSuchCityException("not found city :"+cityName);
             else throw e;
         }
-        CityWeather cityWeather = new CityWeather(weatherFromApi);
-        return cityWeather;
+        return new CityWeather(weatherFromApi);
     }
 
     public CityWeather getCityWeather(int id)throws Throwable{
@@ -47,8 +44,7 @@ public class WeatherCommunicatorImp implements WeatherCommunicator{
             if(e.getStatusCode()== HttpStatus.NOT_FOUND) throw new NoSuchCityException("not found city by id :"+id);
             else throw e;
         }
-        CityWeather cityWeather = new CityWeather(weatherFromApi);
-        return cityWeather;
+        return new CityWeather(weatherFromApi);
     }
 
     public CityWeather getCityWeather(double lon,double lat)throws Throwable{
@@ -59,8 +55,7 @@ public class WeatherCommunicatorImp implements WeatherCommunicator{
             if(e.getStatusCode()== HttpStatus.NOT_FOUND) throw new NoSuchCityException("not found city by cord:"+lon+" "+lat);
             else throw e;
         }
-        CityWeather cityWeather = new CityWeather(weatherFromApi);
-        return cityWeather;
+        return new CityWeather(weatherFromApi);
     }
 
 }
