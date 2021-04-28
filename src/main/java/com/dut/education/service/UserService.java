@@ -29,6 +29,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserFromDB user = userRepository.findUserFromDBByUsername(s);
+        user.getFavoriteCity().size();
         return user;
     }
 
