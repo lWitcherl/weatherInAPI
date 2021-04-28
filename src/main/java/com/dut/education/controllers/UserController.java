@@ -37,7 +37,7 @@ public class UserController {
     }
     @PostMapping("/auth")
     public UserDetails getAuthData(HttpServletRequest request){
-        return userService.loadUserByUsername(request.getParameter("username"));
+        return userService.loadUserByUsername(request.getParameter("username")) ;
     }
     @PostMapping("/save")
     public boolean saveUser(@RequestBody UserInfo userInfo){

@@ -1,5 +1,6 @@
 package com.dut.education.service;
 
+import com.dut.education.entitys.UserDetailsImp;
 import com.dut.education.entitys.UserFromDB;
 import com.dut.education.entitys.UserInfo;
 import com.dut.education.entitys.UserRole;
@@ -29,8 +30,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserFromDB user = userRepository.findUserFromDBByUsername(s);
-        user.getFavoriteCity().size();
-        return user;
+        return new UserDetailsImp(user);
     }
 
     @Transactional
