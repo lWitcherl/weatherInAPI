@@ -4,6 +4,8 @@ import com.dut.education.entitys.UserFromDB;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
+
 
 @Repository
 public class UserFromDBRepositoryImp implements UserFromDBRepository{
@@ -15,15 +17,25 @@ public class UserFromDBRepositoryImp implements UserFromDBRepository{
 
     @Override
     public UserFromDB findUserFromDBByUsername(String name) {
-        UserFromDB user = sessionFactory.getCurrentSession()
-                .createQuery("from UserFromDB where username ='"+name+"'",UserFromDB.class).getSingleResult();
+        UserFromDB user ;
+        try {
+            user = sessionFactory.getCurrentSession()
+                    .createQuery("from UserFromDB where username ='"+name+"'",UserFromDB.class).getSingleResult();
+        }catch (NoResultException e ){
+            user=null;
+        }
         return user;
     }
 
     @Override
     public UserFromDB findUserFromDBByEmail(String email) {
-        UserFromDB user = sessionFactory.getCurrentSession()
-                .createQuery("from UserFromDB where email ='"+email+"'",UserFromDB.class).getSingleResult();
+        UserFromDB user;
+        try {
+            user = sessionFactory.getCurrentSession()
+                    .createQuery("from UserFromDB where email ='"+email+"'",UserFromDB.class).getSingleResult();
+        }catch (NoResultException e ){
+            user=null;
+        }
         return user;
     }
 
