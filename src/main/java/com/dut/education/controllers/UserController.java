@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
     private UserService userService;
+    private boolean result;
 
     public UserController(@Qualifier("userService") UserService userService) {
         this.userService = userService;
@@ -21,12 +22,11 @@ public class UserController {
 
     @PostMapping("/check")
     public boolean checkUserDataForRegistration(HttpServletRequest request){
-        boolean result = false;
         if(request.getParameter("username")!=null){
             result = userService.findUsername(request.getParameter("username"));
         }else if(request.getParameter("email")!=null){
             result = userService.findEmail(request.getParameter("email"));
-        }
+        }else result= false;
         return result;
     }
 
@@ -47,11 +47,18 @@ public class UserController {
     public boolean updateUser(HttpServletRequest request){
         boolean result;
         try{
-            result = userService.updateUser(request.getParameter("username"),
+            result = userService.updateCityList(request.getParameter("username"),
                     Integer.parseInt(request.getParameter("id")));
         }catch (NumberFormatException e){
             return false;
         }
+        return result;
+    }
+    @PostMapping("/del")
+    public boolean deleteCity(HttpServletRequest request){
+        result = userService.deleteCity(request.getParameter("username"),
+                Integer.parseInt(request.getParameter("id")));
+
         return result;
     }
 }

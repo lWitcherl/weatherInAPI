@@ -62,12 +62,19 @@ public class UserService implements UserDetailsService {
         return true;
     }
     @Transactional
-    public boolean updateUser(String username,int id){
+    public boolean updateCityList(String username,int id){
         UserFromDB user = loadUserFromDB(username);
         List<Integer> city = user.getFavoriteCity();
         //if (city.size()=3) return false;
         city.add(id);
         if (city.size()>3) user.getFavoriteCity().remove(0);
+        userRepository.save(user);
+        return true;
+    }
+    @Transactional
+    public boolean deleteCity(String username,int id){
+        UserFromDB user = loadUserFromDB(username);
+        user.getFavoriteCity().remove((Integer) id);
         userRepository.save(user);
         return true;
     }
