@@ -32,7 +32,7 @@ public class UserController {
 
     @PostMapping("/info")
     public UserInfo getUserInfo(HttpServletRequest request){
-        UserFromDB userFromDB = (UserFromDB) userService.loadUserByUsername(request.getParameter("username"));
+        UserFromDB userFromDB = userService.loadUserFromDB(request.getParameter("username"));
         return new UserInfo(userFromDB);
     }
     @PostMapping("/auth")
@@ -42,5 +42,16 @@ public class UserController {
     @PostMapping("/save")
     public boolean saveUser(@RequestBody UserInfo userInfo){
         return userService.saveUser(userInfo);
+    }
+    @PostMapping("/update")
+    public boolean updateUser(HttpServletRequest request){
+        boolean result;
+        try{
+            result = userService.updateUser(request.getParameter("username"),
+                    Integer.parseInt(request.getParameter("id")));
+        }catch (NumberFormatException e){
+            return false;
+        }
+        return result;
     }
 }

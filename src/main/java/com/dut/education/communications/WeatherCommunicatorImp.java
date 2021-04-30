@@ -38,6 +38,7 @@ public class WeatherCommunicatorImp implements WeatherCommunicator{
 
     public CityWeather getCityWeather(int id)throws Throwable{
         WeatherFromApi weatherFromApi;
+        if(id<1) throw  new NoSuchCityException("not found city by id :"+id);
         try{
             weatherFromApi = restTemplate.getForObject(URL+"&id="+id, WeatherFromApi.class);
         }catch (HttpStatusCodeException e){

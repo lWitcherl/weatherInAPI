@@ -42,6 +42,12 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserFromDBByUsername(name)!=null;
     }
     @Transactional
+    public UserFromDB loadUserFromDB(String name){
+        UserFromDB user = userRepository.findUserFromDBByUsername(name);
+        user.getFavoriteCity().size();
+        return user;
+    }
+    @Transactional
     public boolean saveUser(UserInfo userInfo){
         if (!findUsername(userInfo.getUsername())&&!findEmail(userInfo.getEmail())){
             try {
@@ -56,9 +62,12 @@ public class UserService implements UserDetailsService {
         return true;
     }
     @Transactional
-    public boolean updateUser(UserInfo userInfo){
-        UserFromDB user =(UserFromDB) loadUserByUsername(userInfo.getUsername());
-        user.setFavoriteCity(userInfo.getFavoriteCity());
+    public boolean updateUser(String username,int id){
+        UserFromDB user = loadUserFromDB(username);
+        List<Integer> city = user.getFavoriteCity();
+        //if (city.size()=3) return false;
+        city.add(id);
+        if (city.size()>3) user.getFavoriteCity().remove(0);
         userRepository.save(user);
         return true;
     }

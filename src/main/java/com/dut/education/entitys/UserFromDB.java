@@ -30,6 +30,7 @@ public class UserFromDB {
         this.username = userInfo.getUsername();
         this.password = userInfo.getPassword();
         this.email = userInfo.getEmail();
+        this.favoriteCity = userInfo.getFavoriteCity();
     }
 
     public int getId() {
